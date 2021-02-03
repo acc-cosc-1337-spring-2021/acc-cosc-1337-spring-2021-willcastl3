@@ -1,5 +1,5 @@
 //write include statements
-
+#include "input.h"
 
 //write namespace using statements
 
