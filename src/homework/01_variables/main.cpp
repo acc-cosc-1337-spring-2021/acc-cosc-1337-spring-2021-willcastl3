@@ -9,8 +9,8 @@ int main()
 {
     double meal_amount, tip_rate, tip_amount, tax_amount, total;
 
-    std::cout << "\n";
-    std::cout << "Enter Meal Total: $";
+    std::cout << "\n" 
+    << "Enter Meal Total: $";
     std::cin >> meal_amount;
 
     tax_amount = get_sales_tax(meal_amount);
@@ -23,17 +23,17 @@ int main()
 
     total = tip_amount + tax_amount + meal_amount;
 
-    std::cout << "Meal Amount: $";
-    std::cout << meal_amount << "\n";
+    std::cout << "Meal Amount:" 
+    << std::setw(2) << "$" << meal_amount << "\n";
 
-    std::cout << "Sales Tax: " << std::setw(3) << "$";
-    std::cout << tax_amount << "\n";
+    std::cout << "Sales Tax:" 
+    << std::setw(4) << "$" << tax_amount << "\n";
 
-    std::cout << "Tip Amount: " << std::setw(2) << "$";
-    std::cout << tip_amount << "\n";
+    std::cout << "Tip Amount:" 
+    << std::setw(3) << "$" << tip_amount << "\n";
 
-    std::cout << "Total: " << std::setw(7) << "$";
-    std::cout << total << "\n";
+    std::cout << "Total:" 
+    << std::setw(8) << "$" << total<< "\n";
 
     return 0;
 }
