@@ -35,3 +35,10 @@ TEST_CASE("Test bank account withdraw with valid amount")
     account.withdraw(10);
     REQUIRE(account.get_balance() == 40);
 }
+
+TEST_CASE("test bank account deposit with given begin balance")
+{
+    BankAccount test_account(50);
+    test_account.deposit(50);
+    REQUIRE(test_account.get_balance()==100);
+}
