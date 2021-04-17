@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
 #include "catch.hpp"
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
 
 TEST_CASE("Verify Test Configuration", "verification") {
 	REQUIRE(true == true);
@@ -8,21 +9,21 @@ TEST_CASE("Verify Test Configuration", "verification") {
 
 TEST_CASE("Verify Player Sets to X")
 {
-    TikTacToe set_player_to_x;
+    TicTacToe set_player_to_x;
     set_player_to_x.start_game("X");
     REQUIRE(set_player_to_x.get_player() == "X");
 }
 
 TEST_CASE("Verify Player Sets to O")
 {
-    TikTacToe set_player_to_o;
+    TicTacToe set_player_to_o;
     set_player_to_o.start_game("O");
     REQUIRE(set_player_to_o.get_player() == "O");
 }
 
 TEST_CASE("Verify game ends when board is full, tie game, no winner")
 {
-    TikTacToe tie_game;
+    TicTacToe tie_game;
     tie_game.start_game("x");
 
     tie_game.mark_board(1);//x
@@ -48,7 +49,7 @@ TEST_CASE("Verify game ends when board is full, tie game, no winner")
 
 TEST_CASE("Verify win by first column", "X wins first column")
 {
-    TikTacToe first_column_win;
+    TicTacToe first_column_win;
     first_column_win.start_game("X");
 
     REQUIRE(first_column_win.game_over() == false);
@@ -67,7 +68,7 @@ TEST_CASE("Verify win by first column", "X wins first column")
 
 TEST_CASE("Verify win by second column", "X wins second column")
 {
-    TikTacToe second_column_win;
+    TicTacToe second_column_win;
     second_column_win.start_game("X");
 
     REQUIRE(second_column_win.game_over() == false);
@@ -86,7 +87,7 @@ TEST_CASE("Verify win by second column", "X wins second column")
 
 TEST_CASE("Verify win by third column", "X wins third column")
 {
-    TikTacToe third_column_win;
+    TicTacToe third_column_win;
     third_column_win.start_game("X");
 
     REQUIRE(third_column_win.game_over() == false);
@@ -105,7 +106,7 @@ TEST_CASE("Verify win by third column", "X wins third column")
 
 TEST_CASE("Verify diagonal win, left to right", "X wins diagonally")
 {
-    TikTacToe diagonal_win_leftToright;
+    TicTacToe diagonal_win_leftToright;
     diagonal_win_leftToright.start_game("X");
 
     REQUIRE(diagonal_win_leftToright.game_over() == false);
@@ -124,7 +125,7 @@ TEST_CASE("Verify diagonal win, left to right", "X wins diagonally")
 
 TEST_CASE("Verify diagonal win, right to left", "X wins diagonally ")
 {
-    TikTacToe diagonal_win_rightToleft;
+    TicTacToe diagonal_win_rightToleft;
     diagonal_win_rightToleft.start_game("X");
 
     REQUIRE(diagonal_win_rightToleft.game_over() == false);
@@ -143,7 +144,7 @@ TEST_CASE("Verify diagonal win, right to left", "X wins diagonally ")
 
 TEST_CASE("Verify by first row", "X wins first row")
 {
-    TikTacToe first_row_win;
+    TicTacToe first_row_win;
     first_row_win.start_game("X");
 
     REQUIRE(first_row_win.game_over() == false);
@@ -162,7 +163,7 @@ TEST_CASE("Verify by first row", "X wins first row")
 
 TEST_CASE("Verify by second row", "X wins second row")
 {
-    TikTacToe second_row_win;
+    TicTacToe second_row_win;
     second_row_win.start_game("X");
 
     REQUIRE(second_row_win.game_over() == false);
@@ -181,7 +182,7 @@ TEST_CASE("Verify by second row", "X wins second row")
 
 TEST_CASE("Verify by third row", "X wins third row")
 {
-    TikTacToe third_row_win;
+    TicTacToe third_row_win;
     third_row_win.start_game("X");
 
     REQUIRE(third_row_win.game_over() == false);
@@ -196,4 +197,72 @@ TEST_CASE("Verify by third row", "X wins third row")
     third_row_win.mark_board(9);//x
     //x wins
     REQUIRE(third_row_win.game_over() == true);
+}
+
+TEST_CASE("Test case, test get winner class function")
+{
+    TicTacToeManager manager;
+    TicTacToe game;
+
+    // Tie
+    game.start_game("X");
+    game.mark_board(1);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(2);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(3);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(4);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(5);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(7);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(6);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(9);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(8);//x
+    REQUIRE(game.game_over() == true);
+    REQUIRE(game.get_winner() == "C");
+    manager.save_game(game);
+
+    //X Wins Third Row
+    game.start_game("X");
+    REQUIRE(game.game_over() == false);
+    game.mark_board(7);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(4);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(8);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(5);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(9);//x
+    //x wins
+    REQUIRE(game.game_over() == true);
+    manager.save_game(game);
+
+    // O Wins Third row
+    game.start_game("O");
+    REQUIRE(game.game_over() == false);
+    game.mark_board(7);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(4);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(8);//o
+    REQUIRE(game.game_over() == false);
+    game.mark_board(5);//x
+    REQUIRE(game.game_over() == false);
+    game.mark_board(9);//o
+    //O wins
+    REQUIRE(game.game_over() == true);
+    manager.save_game(game);
+
+    int x, o, t;
+    manager.get_winner_total(o,x,t);
+    REQUIRE(x == 1);
+    REQUIRE(o == 1);
+    REQUIRE(t == 1);
+
 }

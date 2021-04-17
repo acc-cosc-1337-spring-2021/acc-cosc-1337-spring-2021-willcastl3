@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include "tic_tac_toe.h"
+#include "tic_tac_toe_manager.h"
+
 using std::string;
 using std::cout;
 using std::cin;
@@ -14,14 +16,14 @@ int main()
 
     string re_run_game;
 
+    //creates instance of TicTacToeManager class
+    TicTacToeManager manager;
     do
     {
-        //creates instance of TikTacToe class
-        TikTacToe game_play;
-
+        //creates instance of TicTacToe class
+        TicTacToe game_play;
         // initializes variables for user choice and position on board
         string choice;
-        int position;
 
         // input validation loop if user  does not select, X or O
         do
@@ -44,32 +46,20 @@ int main()
         // loop that alternates player turn
         do
         {
-            //validation input loop for user position 1-9
-            do{
-                cout<< game_play.get_player() << " Select position 1-9\n"
-                    <<"1|2|3\n"
-                    <<"4|5|6\n"
-                    <<"7|8|9\n"
-                    <<"Enter Position: ";;
-                cin>>position;
-                cout<<"\n";
-
-                // input invalidation error message
-                if(!(position>=1 && position <=9))
-                {
-                    cout<<"**INVALID ENTRY!**\n"
-                        << "\n";
-                }
-            }while(!(position>=1 && position <=9));
-
-            game_play.mark_board(position);
-            game_play.display_board();
-            cout<<"\n";
+            cin>>game_play;
+            cout<<game_play;
 
         //loops until game is over not true
         } while(!game_play.game_over());
 
-        cout<<"Game Over! "<< game_play.get_winner()<<"\n"<<"\n";
+        cout<<game_play.get_winner()<<" wins! Game Over!"<<"\n"<<"\n";
+        choice = "";
+        manager.save_game(game_play);
+
+        int o, x, t;
+        manager.get_winner_total(o,x,t);
+
+        cout<<manager;
 
         //input invalidation for program re-run by user request
         do {
