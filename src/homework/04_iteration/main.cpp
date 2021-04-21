@@ -1,16 +1,62 @@
-//write include statements
+#include <iostream>
+#include "dna.h"
 
-//write using statements
+using std::cout; using std::cin; using std::string; using std::getline;
 
-
-/*
-Write code that prompts user to enter 1 for Get GC Content, 
-or 2 for Get DNA Complement.  The program will prompt user for a 
-DNA string and call either get gc content or get dna complement
-function and display the result. Program runs as long as 
-user enters a y or Y.
-*/
-int main() 
+int main()
 {
-	return 0;
+    string menu_selection;
+    do {
+        cout<<"******************\n"
+            <<"Menu\n"
+            <<"1 = GC Content\n"
+            <<"2 = DNA Complement\n"
+            <<"Y = Exit.\n"
+            <<"******************"
+            <<"\n"
+            <<"\n"
+            <<"Enter Option: ";
+
+        getline(cin,menu_selection);
+        cout <<"\n";
+
+        if (menu_selection == "1")
+        {
+            string user_dna;
+            cout << "Enter DNA: ";
+            getline(cin,user_dna);
+
+            double gc_content;
+            gc_content = get_gc_content(user_dna);
+
+            cout << "GC-content of a DNA: "<< gc_content;
+            cout << "\n"
+                 << "\n";
+        }
+
+        else if (menu_selection == "2")
+        {
+            string user_dna;
+            cout << "Enter DNA: ";
+            getline(cin,user_dna);
+
+            string dna_complement;
+            dna_complement = get_dna_complement(user_dna);
+
+            cout << "DNA Complement: "<< dna_complement;
+            cout << "\n"
+                 << "\n";
+        }
+
+        else if(menu_selection != "y" || menu_selection != "1")
+        {
+            break;
+        }
+
+    }while(menu_selection == "1" || menu_selection == "2");
+
+    cout<< "Program terminated by user...";
+
+    return 0;
 }
+
