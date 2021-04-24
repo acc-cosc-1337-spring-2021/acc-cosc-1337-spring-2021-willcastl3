@@ -49,10 +49,22 @@ bool TicTacToe::check_board_full()
 {
     bool is_full = true;
 
-    for(int i = 0; i < 9; i++)
+    if(pegs.size() == 9)
     {
-        if(pegs[i] == " ")
-            is_full = false;
+        for (int i = 0; i < 9; i++)
+        {
+            if (pegs[i] == " ")
+                is_full = false;
+        }
+    }
+
+    else if(pegs.size() == 16)
+    {
+        for (int i = 0; i < 16; i++)
+        {
+            if (pegs[i] == " ")
+                is_full = false;
+        }
     }
 
     return is_full;
@@ -67,83 +79,6 @@ void TicTacToe::clear_board()
 
 }
 
-bool TicTacToe::check_column_win() {
-
-    bool win = true;
-
-    for(int i = 0; i<9; i++ )
-    {
-        if((pegs[0] == "X" && pegs[3]=="X" && pegs[6] == "X") ||
-        (pegs[0] == "O" && pegs[3]=="O" && pegs[6] == "O"))
-        {
-            return win;
-        }
-
-        if((pegs[1] == "X" && pegs[4]=="X" && pegs[7] == "X") ||
-        (pegs[1] == "O" && pegs[4]=="O" && pegs[7] == "O"))
-        {
-            return win;
-        }
-
-        if((pegs[2] == "X" && pegs[5]=="X" && pegs[8] == "X") ||
-        (pegs[2] == "O" && pegs[5]=="O" && pegs[8] == "O"))
-        {
-            return win;
-        }
-    }
-
-    return false;
-}
-
-bool TicTacToe::check_diagonal_win() {
-
-    bool win = true;
-
-    for(int i = 0; i<9; i++ )
-    {
-        if((pegs[0] == "X" && pegs[4]=="X" && pegs[8] == "X") ||
-        (pegs[0] == "O" && pegs[4]=="O" && pegs[8] == "O"))
-        {
-            return win;
-        }
-
-        if((pegs[6] == "X" && pegs[4]=="X" && pegs[2] == "X") ||
-        (pegs[6] == "O" && pegs[4]=="O" && pegs[2] == "O"))
-        {
-            return win;
-        }
-    }
-
-    return false;
-}
-
-bool TicTacToe::check_row_win() {
-
-    bool win = true;
-
-    for(int i = 0; i<9; i++ )
-    {
-        if((pegs[0] == "X" && pegs[1]=="X" && pegs[2] == "X") ||
-        (pegs[0] == "O" && pegs[1]=="O" && pegs[2] == "O"))
-        {
-            return win;
-        }
-
-        if((pegs[3] == "X" && pegs[4]=="X" && pegs[5] == "X") ||
-        (pegs[3] == "O" && pegs[4]=="O" && pegs[5] == "O"))
-        {
-            return win;
-        }
-
-        if((pegs[6] == "X" && pegs[7]=="X" && pegs[8] == "X") ||
-        (pegs[6] == "O" && pegs[7]=="O" && pegs[8] == "O"))
-        {
-            return win;
-        }
-    }
-    return false;
-}
-
 void TicTacToe::set_winner() {
 
     if(player == "X" )
@@ -155,23 +90,53 @@ void TicTacToe::set_winner() {
     }
 }
 
+bool TicTacToe::check_column_win() {
+    return false;
+}
+
+bool TicTacToe::check_row_win() {
+    return false;
+}
+
+bool TicTacToe::check_diagonal_win() {
+    return false;
+}
+
 
 //FRIEND FUNCTIONS
 std::ostream& operator<<(std::ostream& out, const TicTacToe& game)
 {
-    for(int i = 0; i < 9; i++)
+    if(game.pegs.size() == 9)
     {
-        std::cout << game.pegs[i];
-        if ((i+1) % 3 == 0)
+        for(int i = 0; i < 9; i++)
         {
-            std::cout<<"\n";
-        }
-        else
-        {
-            std::cout<<" | ";
+            std::cout << game.pegs[i];
+            if ((i+1) % 3 == 0)
+            {
+                std::cout<<"\n";
+            }
+            else
+            {
+                std::cout<<" | ";
+            }
         }
     }
-    std::cout<<"\n";
+
+    else if(game.pegs.size() == 16)
+    {
+        for(int i = 0; i < 16; i++)
+        {
+            std::cout << game.pegs[i];
+            if ((i+1) % 4 == 0)
+            {
+                std::cout<<"\n";
+            }
+            else
+            {
+                std::cout<<" | ";
+            }
+        }
+    }
     return out;
 }
 
@@ -179,23 +144,47 @@ std::istream& operator>>(std::istream& in, TicTacToe& game)
 {
     int position;
 
-    do{
-        std::cout<< game.get_player() << " select position 1-9\n"
-            <<"1|2|3\n"
-            <<"4|5|6\n"
-            <<"7|8|9\n"
-            <<"Enter Position: ";;
-        std::cin>>position;
+    if(game.pegs.size() == 9)
+    {
+        do {
+            std::cout << game.get_player() << " select position 1-9\n"
+                      << "1|2|3\n"
+                      << "4|5|6\n"
+                      << "7|8|9\n"
+                      << "Enter Position: ";
+            std::cin >> position;
 
-        // input invalidation error message
-        if(!(position>=1 && position <=9))
-        {
-            std::cout<<"**INVALID ENTRY!**\n"
-                << "\n";
-        }
-    }while(!(position>=1 && position <=9));
+            // input invalidation error message
+            if (!(position >= 1 && position <= 9)) {
+                std::cout << "**INVALID ENTRY!**\n"
+                          << "\n";
+            }
+        } while (!(position >= 1 && position <= 9));
 
-    game.mark_board(position);
+        game.mark_board(position);
+        return in;
+    }
 
-    return in;
+    else if(game.pegs.size() == 16)
+    {
+        do {
+            std::cout << game.get_player() << " select position 1-16\n"
+                      << "1 |2 |3 |4\n"
+                      << "5 |6 |7 |8\n"
+                      << "9 |10|11|12\n"
+                      << "13|14|15|16\n"
+                      << "Enter Position: ";
+            std::cin >> position;
+
+            // input invalidation error message
+            if (!(position >= 1 && position <= 16)) {
+                std::cout << "**INVALID ENTRY!**\n"
+                          << "\n";
+            }
+        } while (!(position >= 1 && position <= 16));
+
+        game.mark_board(position);
+        return in;
+    }
 }
+
