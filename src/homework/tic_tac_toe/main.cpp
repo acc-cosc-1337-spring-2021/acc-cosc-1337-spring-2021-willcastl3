@@ -18,8 +18,9 @@ int main()
 
     string choice;
     string re_run_game;
-    TicTacToeManager manager;
     unique_ptr<TicTacToe>game_play;
+    TicTacToeData data;
+    TicTacToeManager manager(data);
 
     do {
         string game_mode;
